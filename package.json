@@ -1,7 +1,7 @@
 {
   "name": "com.studiomanette.utils",
   "displayName": "Studio Manette utilities",
-  "version": "1.3.9",
+  "version": "1.3.10",
   "unity": "2020.3",
   "description": "Studio Manette utilities : various useful code snippets",
   "publishConfig": {

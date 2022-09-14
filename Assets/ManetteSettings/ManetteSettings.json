@@ -5,6 +5,7 @@
     "FolderPR": "03_PROP",
     "AssetsExportFolder": "export",
     "AssetsFolder": "X:/03_ASSETS",
+    "ShotsFolder": "X:/04_SHOTS",
     "EpisodeDataRootPath": "Assets/Episode",
     "MbxpFolder": "07_TEXTURES/MBXP"
 }

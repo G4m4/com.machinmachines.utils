@@ -30,6 +30,10 @@ namespace StudioManette
                 [Tooltip("Root folder for models")]
                 public string AssetsFolder = "X:/03_ASSETS";
 
+                [IsFilepath(false, "", IsFilepathAttribute.FileType.RootDirectory)]
+                [Tooltip("Root folder for shots description files")]
+                public string ShotsFolder = "X:/04_SHOTS";
+
                 [Space(32)]
 
                 [Header("CBX")]
