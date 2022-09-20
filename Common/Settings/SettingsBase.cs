@@ -44,7 +44,7 @@ namespace MachinMachines
                                                                                  "ManetteSettings",
                                                                                  $"{typeof(T).Name}.json");
 #if UNITY_EDITOR
-                public static readonly string kEditorSettingsPath = Path.Combine(Paths.GetPackageRelativePath("com.studiomanette.utils"),
+                public static readonly string kEditorSettingsPath = Path.Combine(Paths.GetPackageRelativePath("com.machinmachines.utils"),
                                                                                  "Assets",
                                                                                  "ManetteSettings",
                                                                                  $"{typeof(T).Name}.json");
