@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#if NET_STANDARD_2_1
+using System;
+#endif  // NET_STANDARD_2_1
+
 using System.Globalization;
 
 using UnityEngine.Profiling;
