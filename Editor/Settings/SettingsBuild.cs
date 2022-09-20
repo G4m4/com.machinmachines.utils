@@ -20,7 +20,7 @@ using UnityEditor.Build.Reporting;
 
 using UnityEngine;
 
-namespace StudioManette
+namespace MachinMachines
 {
     namespace Utils
     {

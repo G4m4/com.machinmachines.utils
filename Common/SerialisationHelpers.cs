@@ -16,7 +16,7 @@ using System.Globalization;
 
 using UnityEngine.Profiling;
 
-namespace StudioManette
+namespace MachinMachines
 {
     namespace Utils
     {

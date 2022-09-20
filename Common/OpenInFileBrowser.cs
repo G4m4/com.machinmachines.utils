@@ -16,7 +16,7 @@ using System.IO;
 
 using UnityEngine;
 
-namespace StudioManette
+namespace MachinMachines
 {
     namespace Utils
     {

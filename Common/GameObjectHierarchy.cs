@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace StudioManette
+namespace MachinMachines
 {
     namespace Utils
     {
