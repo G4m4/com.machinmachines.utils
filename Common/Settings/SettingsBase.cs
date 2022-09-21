@@ -25,6 +25,33 @@ namespace MachinMachines
     {
         namespace Settings
         {
+            abstract public class SettingsWithPath : ScriptableObject
+            {
+#if UNITY_EDITOR
+                // Override this property in the child class if it is defined in another package
+                // This is public only so it can be used below so do NOT use it!
+                public virtual string PackagePath { get { return Paths.GetPackageRelativePath("com.machinmachines.utils"); } }
+                public string EditorSettingsPath { get { return Path.Combine(PackagePath, _editorSettingsPath); } }
+#endif  // UNITY_EDITOR
+
+                public string SettingsPath
+                {
+                    get
+                    {
+#if UNITY_EDITOR
+                        return EditorSettingsPath;
+#else
+                        return RuntimeSettingsPath;
+#endif  // UNITY_EDITOR
+                    }
+                }
+
+                public string RuntimeSettingsPath { get { return _runtimeSettingsPath; } }
+
+                internal string _editorSettingsPath = "";
+                internal string _runtimeSettingsPath = "";
+            }
+
             // Abstract base class for a class of JSON settings that can be used both in-editor or ingame
             // Stored in Streaming Assets so the JSON can be edited manually later on
             //
@@ -36,24 +63,18 @@ namespace MachinMachines
             // But this would work anywhere as it is using platform-specific API to fix the path:
             // Path.GetFullPath(MbxpFolder)
             // So beware! There is a tringlerie de l'enfer(tm) to make sure that no full absolute paths are stored in settings
-            abstract public class SettingsBase<T> : ScriptableObject where T : ScriptableObject
+            abstract public class SettingsBase<T> : SettingsWithPath where T : SettingsWithPath
             {
                 // All settings are stored in the same folder, with the file named after their class
                 // In editor we read the local folder, at runtime it's in StreamingAssets
-                public static readonly string kRuntimeSettingsPath = Path.Combine(Application.streamingAssetsPath,
-                                                                                 "ManetteSettings",
+                protected static readonly string kRuntimeSettingsPath = Path.Combine(Application.streamingAssetsPath,
+                                                                                 "Settings",
                                                                                  $"{typeof(T).Name}.json");
-#if UNITY_EDITOR
-                public static readonly string kEditorSettingsPath = Path.Combine(Paths.GetPackageRelativePath("com.machinmachines.utils"),
-                                                                                 "Assets",
-                                                                                 "ManetteSettings",
-                                                                                 $"{typeof(T).Name}.json");
-                public static readonly string kSettingsPath = kEditorSettingsPath;
-#else
-            public static readonly string kSettingsPath = kRuntimeSettingsPath;
-#endif  // UNITY_EDITOR
+                protected static readonly string kEditorSettingsPath = Path.Combine("Assets",
+                                                                                    "Settings",
+                                                                                    $"{typeof(T).Name}.json");
 
-                private static T _instance = null;
+                internal static T _instance = null;
 
                 // Static getter for retrieving the instance
                 // If no instance is loaded already it does so by reading the JSON file
@@ -63,18 +84,21 @@ namespace MachinMachines
                     if (_instance == null)
                     {
                         _instance = ScriptableObject.CreateInstance<T>();
-                        string directory = Path.GetDirectoryName(kSettingsPath);
+                        _instance._editorSettingsPath = kEditorSettingsPath;
+                        _instance._runtimeSettingsPath = kRuntimeSettingsPath;
+
+                        string directory = Path.GetDirectoryName(_instance.SettingsPath);
                         if (!Directory.Exists(directory))
                         {
                             Directory.CreateDirectory(directory);
                         }
-                        if (File.Exists(kSettingsPath))
+                        if (File.Exists(_instance.SettingsPath))
                         {
-                            JsonUtility.FromJsonOverwrite(File.ReadAllText(kSettingsPath), _instance);
+                            JsonUtility.FromJsonOverwrite(File.ReadAllText(_instance.SettingsPath), _instance);
                         }
                         // We always write the file in case the base ScriptableObject gets updated from the code
                         // TODO @gama: decide whether the file or the code is right once and for all!
-                        File.WriteAllText(kSettingsPath, JsonUtility.ToJson(_instance, true));
+                        File.WriteAllText(_instance.SettingsPath, JsonUtility.ToJson(_instance, true));
 #if UNITY_EDITOR
                         // This is only useful so the file appears immediately in the projet browser
                         AssetDatabase.SaveAssets();
@@ -101,7 +125,7 @@ namespace MachinMachines
                                 if (filePathAttribute.Filetype != IsFilepathAttribute.FileType.RootDirectory
                                     && Path.IsPathFullyQualified(propertyValue))
                                 {
-                                    Debug.LogError($"Path {propertyValue} for field {info.Name} in settings file {Path.GetFileName(kSettingsPath)} is absolute, this is forbidden to prevent cross-platform issues!");
+                                    Debug.LogError($"Path {propertyValue} for field {info.Name} in settings file {Path.GetFileName(_instance.SettingsPath)} is absolute, this is forbidden to prevent cross-platform issues!");
                                 }
                                 // Make sure reference folders exist
                                 if (!Directory.Exists(propertyValue))
