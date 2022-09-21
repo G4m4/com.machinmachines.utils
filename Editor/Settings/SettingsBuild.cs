@@ -32,8 +32,6 @@ namespace MachinMachines
             public static class SettingsPaths
             {
                 internal static readonly (string, string)[] s_Paths = new (string, string)[] {
-                    (ManetteSettings.kEditorSettingsPath, ManetteSettings.kRuntimeSettingsPath),
-                    (ProdSettings.kEditorSettingsPath, ProdSettings.kRuntimeSettingsPath)
                 };
             }
 
