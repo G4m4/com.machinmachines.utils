@@ -1,2 +1,2 @@
-# com.studiomanette.utils
-Studio Manette utilities : various useful code snippets
+# com.machinmachines.utils
+MachinMachines utilities : various useful code snippets
