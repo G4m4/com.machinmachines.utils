@@ -1,8 +1,8 @@
 {
-    "name": "StudioManette.Utils.Editor",
+    "name": "MachinMachines.Utils.Editor",
     "rootNamespace": "",
     "references": [
-        "StudioManette.Utils.Common"
+        "MachinMachines.Utils.Common"
     ],
     "includePlatforms": [
         "Editor"
