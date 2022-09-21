@@ -71,8 +71,8 @@ namespace MachinMachines
             //
             // Typical example
             // with:
-            // fromPath = Application.dataPath (= "D:/00_MANETTE/Edna_main/Assets")
-            // toPath = "D:/00_MANETTE/Edna_main/Assets/Renderer/Textures/HDRI/HDRI_01.psd"
+            // fromPath = Application.dataPath (= "D:/MachinMachines/Assets")
+            // toPath = "D:/MachinMachines/Assets/Renderer/Textures/HDRI/HDRI_01.psd"
             // it yields:
             // "Assets\Renderer\Textures\HDRI\HDRI_01.psd"
             //
@@ -80,14 +80,14 @@ namespace MachinMachines
             //
             // GOTCHA: beware of trailing slashes!
             // With:
-            // fromPath = "D:/00_MANETTE/Edna_main/Assets/" (exactly the same as the above example + a trailing "/")
-            // toPath = "D:/00_MANETTE/Edna_main/Assets/Renderer/Textures/HDRI/HDRI_01.psd"
+            // fromPath = "D:/MachinMachines/Assets/" (exactly the same as the above example + a trailing "/")
+            // toPath = "D:/MachinMachines/Assets/Renderer/Textures/HDRI/HDRI_01.psd"
             // it yields:
             // "Renderer\Textures\HDRI\HDRI_01.psd"
             //
             // GOTCHA: matching seemingly unrelated paths
             // With:
-            // fromPath = Application.dataPath (= "D:/00_MANETTE/Edna_main/Assets")
+            // fromPath = Application.dataPath (= "D:/MachinMachines/Assets")
             // toPath = "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipelineResources/Texture/BlueNoise16/L/LDR_LLL1_25.png"
             // it yields:
             // "Library\PackageCache\com.unity.render-pipelines.high-definition@12.1.6\Runtime\RenderPipelineResources\Texture\BlueNoise16\L\LDR_LLL1_25.png"
